@@ -26,7 +26,7 @@ void main(){
 
   //incorrect signup with duplicate key and unique name
   try{
-    user.signUp("pich" ,'12');
+    user.signUp("nha" ,'12');
   }catch(e){
     print(e);
   }
