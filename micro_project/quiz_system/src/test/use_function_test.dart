@@ -1,7 +1,7 @@
 import '../user_data/user.dart';
 
 void main(){
-  User user = User(id: 1);
+  User user = User();
 
   //add user
   try{
@@ -26,7 +26,7 @@ void main(){
 
   //correct signup with duplicate key and unique name
   try{
-    user.signUp("pich" ,'12');
+    user.signUp("nha" ,'123');
   }catch(e){
     print(e);
   }

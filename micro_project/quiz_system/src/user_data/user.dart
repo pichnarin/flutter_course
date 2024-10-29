@@ -22,17 +22,13 @@
 // which means no two users can have the same key,
 // even if their usernames are different.
 
-import 'package:test/expect.dart';
-
-import '../sort_json.dart';
+import 'dart:convert';
+import 'dart:io';
 
 class User {
-  //user's attribute
-  final int _id;
 
   //constructor
-  User({required int id})
-      : _id = id;
+  User();
 
   //Storage for user
   final Map<String, UserAccount> userStorage = {};
@@ -64,7 +60,7 @@ class User {
     for (UserAccount account in userStorage.values) {
       // Check if both key and name match
       if (account._key == key) {
-        throw Exception('Duplicate key found');
+        throw Exception('Duplicate key found!!!');
       }
     }
     // If no duplicate is found
@@ -78,65 +74,81 @@ class User {
       //check if name already exist
       if(userStorage.containsKey(userName)){
         throw Exception("$userName already exist!!");
-        return null;
       }
 
-      //if no duplicate key
-      if(checkDuplicate(key) != null){
-        throw Exception('This key is already use!!');
-      }
+      checkDuplicate(key);
 
-      //if no duplicate and no exist name
-      UserAccount newUser = UserAccount(userName: userName, userKey: key, userAttempt: 0, userScore: 0);
+      //if no duplicate and no exist name create user and store in userStorage and convert userStorage to jsonFormat and write jsonFormat to json file
+      UserAccount newUser = UserAccount(userName: userName, userKey: key, userResult: {});
       userStorage[userName] = newUser;
+
+      saveUser();
 
       print('Sign up successfully');
 
       return newUser;
 
     }catch(e){
-      throw Exception('Error: $e');
+      print('$e');
+      return null;
   }
   }
 
-
-
-  @override
-  String toString() {
-    return 'User[Id: $_id]';
+  //convert user account to json format
+  String toJsonFormat(){
+    Map<String, dynamic> jsonMap = userStorage.map((userName, userAccount) => MapEntry(userName, userAccount.toJson()));
+    return jsonEncode(jsonMap);
   }
 
-  //getter
-  int get id => _id;
+  //save return value of toJsonFormat() to user_data.json
+  Future<void> saveUser() async {
+    //get userStorage that have been convert to jsonFormat
+    String jsonData = toJsonFormat();
+    //file that store jsonData
+    File file = File('src/project/quiz_system/data/user_data.json');
+    //read jsonData to that file
+    try{
+      await file.writeAsString(jsonData);
+      print('Saved successfully.');
+    }catch(e){
+      print('Error saving json data: $e');
+    }
+  }
 }
 
 class UserAccount {
   //user's attribute
   final String _name;
   final String _key;
-  final int _attempt;
-  final int _score;
+  final Map<int, int> _result;
 
   //constructor
   UserAccount(
       {required String userName,
       required String userKey,
-      required int userAttempt,
-      required int userScore})
+      required Map<int, int> userResult})
       : _name = userName,
         _key = userKey,
-        _attempt = userAttempt,
-        _score = userScore;
+        _result = userResult;
 
 
+  //convert user account to JSON
+  Map<String, dynamic> toJson() {
+    //return in json format
+    return {
+      "name": _name,
+      "key": _key,
+      "result": _result,
+    };
+  }
   @override
   String toString() {
-    return 'UserStorage[Name: $_name, Key: $_key, Attempt: $_attempt, Score: $_score]';
+    return 'UserStorage[Name: $_name, Key: $_key, Result: $_result]';
 
   } //getter
-  int get score => _score;
-  int get attempt => _attempt;
+  Map<int, int> get result => _result;
   String get key => _key;
   String get name => _name;
 }
+
 
