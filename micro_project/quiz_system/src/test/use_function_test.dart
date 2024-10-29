@@ -24,7 +24,7 @@ void main(){
     print(e);
   }
 
-  //correct signup with duplicate key and unique name
+  //incorrect signup with duplicate key and unique name
   try{
     user.signUp("pich" ,'12');
   }catch(e){
