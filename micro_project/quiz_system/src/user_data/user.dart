@@ -7,15 +7,14 @@
 //0. login
 //1. get user input
 //2. check user's password
-//3. convert input to json format
+//3. convert input to json format //TODO:
 //4. save json data
 
 //-for current user
 //0. sign up
 //1. get user's input
 //2. check user's password
-//3. convert input to json format
-//4. save json data
+
 
 // Signup Logic:
 // Unique Username: The username must not already exist in userStorage.
