@@ -46,7 +46,6 @@ void main() {
                 ),
               ),
               const SizedBox(height: 20), // Space between cards
-              // You can add more hobby cards here
             ],
           ),
         ),
