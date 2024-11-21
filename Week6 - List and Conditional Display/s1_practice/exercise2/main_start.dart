@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_leasson/w6/s1_practice/exercise2/profile_tile_stateless.dart';
 import 'data/profile_data.dart';
 import 'model/profile_tile_model.dart';
 
@@ -55,11 +56,11 @@ class ProfileApp extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Expanded(
-              child: ListView.builder(
-                itemCount: profileData.tiles.length,
-                itemBuilder: (context, index) {
-                  final tile = profileData.tiles[index];
-                  return ProfileTile(
+              child: ListView.builder( // ListView.builder is used to create a scrollable list of items
+                itemCount: profileData.tiles.length,  // itemCount is the number of items in the list
+                itemBuilder: (context, index) { // itemBuilder is a function that returns a widget for each item in the list
+                  final tile = profileData.tiles[index]; // get the tile at the current index
+                  return ProfileTile( // return a ProfileTile widget with the tile data
                     icon: tile.icon,
                     title: tile.title,
                     data: tile.value,
@@ -74,30 +75,4 @@ class ProfileApp extends StatelessWidget {
   }
 }
 
-class ProfileTile extends StatelessWidget {
-  const ProfileTile({
-    super.key,
-    required this.icon,
-    required this.title,
-    required this.data,
-  });
 
-  final IconData icon;
-  final String title;
-  final String data;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        child: ListTile(
-          leading: Icon(icon, color: mainColor),
-          title: Text(title),
-          subtitle: Text(data),
-        ),
-      ),
-    );
-  }
-}
