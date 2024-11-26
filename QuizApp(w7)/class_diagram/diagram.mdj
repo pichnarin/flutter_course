@@ -1,0 +1,34 @@
+# Class Diagram for Quiz App
+
+@startuml
+
+class Quiz {
+  +String title
+  +List<Question> questions
+  +Quiz(String title, List<Question> questions)
+}
+
+class Question {
+  +String title
+  +List<String> possibleAnswers
+  +String goodAnswer
+  +Question(String title, List<String> possibleAnswers, String goodAnswer)
+}
+
+class Answer {
+  +String questionAnswer
+  +Answer(String questionAnswer)
+  +boolean isCorrect(String theAnswer)
+}
+
+class Submission {
+  +List<Answer> answers
+  +void addAnswer(Answer answer)
+  +int getScore()
+  +Answer getAnswerFor(Question question)
+  +void removeAnswer(Answer answer)
+}
+
+
+
+@enduml
