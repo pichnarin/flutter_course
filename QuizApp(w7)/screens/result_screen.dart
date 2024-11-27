@@ -57,7 +57,11 @@ class ResultScreen extends StatelessWidget {
               ],
             ),
           ),
+
+          const SizedBox(height: 20,),
+
           Expanded(
+
             child: ListView.builder(
               itemCount: quiz.questions.length,
               itemBuilder: (context, index) {
