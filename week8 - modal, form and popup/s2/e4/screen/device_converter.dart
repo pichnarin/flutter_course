@@ -25,12 +25,11 @@ class _DeviceConverterState extends State<DeviceConverter> {
   void handleConversion() {
     if (usdInput.text.isNotEmpty && currencyType != null) {
       double usdAmount = double.tryParse(usdInput.text) ?? 0.0;
-      Converter converter =
-      Converter(usdAmount: usdAmount, currency: currencyType!);
+      Converter converter = Converter(usdAmount: usdAmount, currency: currencyType!);
       double convertedAmount = converter.convert();
       convertedAmountController.text = convertedAmount.toStringAsFixed(3);
-    } else {
-      convertedAmountController.text = "Invalid input";
+    }else if(usdInput.text.isEmpty){
+      convertedAmountController.text = '';
     }
   }
 
@@ -103,6 +102,8 @@ class _DeviceConverterState extends State<DeviceConverter> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
+
+                    //
                   ),
                 ),
                 const SizedBox(height: 24),
