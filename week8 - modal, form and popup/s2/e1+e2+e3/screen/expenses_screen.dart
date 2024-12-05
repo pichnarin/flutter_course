@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leasson/w8/s2/e1+e2+e3//model/expense.dart';
 import 'package:flutter_leasson/w8/s2/e1+e2+e3//screen/expense_list.dart';
@@ -24,6 +25,9 @@ class _RegisterExpenseState extends State<RegisterExpense> {
   final eAmountCon = TextEditingController();
   final eDateCon = TextEditingController();
   ExpenseType? expenseType;
+  int? lastDeletedIndex;
+  Expense? lastDeletedExpense;
+
 
   @override
   void dispose() {
@@ -116,14 +120,25 @@ class _RegisterExpenseState extends State<RegisterExpense> {
   //delete function
   void onDelete(String id) {
     setState(() {
-      _registeredExpenses.removeWhere((element) => element.id == id);
+      lastDeletedIndex = _registeredExpenses.indexWhere((element) => element.id == id);
+      lastDeletedExpense = _registeredExpenses.removeAt(lastDeletedIndex!);
+
+      if(kDebugMode){
+        print('Deleted: ${lastDeletedExpense!.title}');
+        print('Index: $lastDeletedIndex');
+      }
     });
   }
 
   //undo delete function
   void cancelDelete(Expense deletedExpense){
     setState(() {
-      _registeredExpenses.add(deletedExpense);
+      _registeredExpenses.insert(lastDeletedIndex!, deletedExpense);
+
+      if(kDebugMode){
+        print('Undo Deleted: ${deletedExpense.title}');
+        print('Index: $lastDeletedIndex');
+      }
     });
   }
 
